@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
+  Slider,
   Text,
   TextInput,
   TouchableOpacity,
@@ -28,11 +29,8 @@ class P extends Component {
             height:45, marginTop:10,
             flexDirection:'row',
             backgroundColor:'#fff'}} onPress={Actions.selectStudent}>
-            <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
+            <View style={{flex:1,justifyContent:'center', alignItems:'center', marginLeft:15}}>
               <Text style={{fontSize:15,color:'#000'}}>{this.props.student.name}</Text>
-            </View>
-            <View style={{justifyContent:'center', marginRight:5}}>
-              <Text style={{fontSize:15,color:'#888'}}>切换</Text>
             </View>
             <View style={{justifyContent:'center', marginRight:15}}>
               <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
@@ -40,45 +38,40 @@ class P extends Component {
         </TouchableOpacity>
 
         <View style={{marginTop:10}}>
-          <View style={{flexDirection:'row',flexWrap:'wrap', justifyContent:'flex-start'}}>
+          <View style={{flexDirection:'row',flexWrap:'wrap', justifyContent:'flex-start', paddingHorizontal:this.props.padding}}>
               <TouchableOpacity
-                 style={{borderWidth:1, borderRadius:5, height:80, margin:5, borderColor:'#888', width:80}}
+                 style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#1abc9c'}}
                   onPress={()=>Actions.school()}>
-                <View style={{flex:1,flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                  <Text style={{fontSize:16}}>学校简介</Text>
-                </View>
+                <IconFont name='cascades' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
+                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>学校简介</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                  style={{borderWidth:1, borderRadius:5, height:80, margin:5, borderColor:'#888', width:80}}
+                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#f1c40f'}}
                   onPress={()=>Actions.noticeList()}>
-                <View style={{flex:1,flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                  <Text style={{fontSize:16}}>消息通知</Text>
-                </View>
+                <IconFont name='notice' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
+                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>消息通知</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                  style={{borderWidth:1, borderRadius:5, height:80, margin:5, borderColor:'#888', width:80}}
+                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#e74c3c'}}
                   onPress={()=>Actions.homeworkList()}>
-                <View style={{flex:1,flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                  <Text style={{fontSize:16}}>家庭作业</Text>
-                </View>
+                <IconFont name='copy' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
+                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>家庭作业</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                  style={{borderWidth:1, borderRadius:5, height:80, margin:5, borderColor:'#888', width:80}}
+                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#3498db'}}
                   onPress={()=>Actions.videoList()}>
-                <View style={{flex:1,flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                  <Text style={{fontSize:16}}>视频监控</Text>
-                </View>
+                <IconFont name='video' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
+                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>视频监控</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                  style={{borderWidth:1, borderRadius:5, height:80, margin:5, borderColor:'#888', width:80}}
+                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#9b59b6'}}
                   onPress={()=>Actions.attenceList()}>
-                <View style={{flex:1,flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                  <Text style={{fontSize:16}}>视频考勤</Text>
-                </View>
+                <IconFont name='camera' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
+                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>视频考勤</Text>
               </TouchableOpacity>
           </View>
         </View>
@@ -88,7 +81,27 @@ class P extends Component {
 }
 
 export default connect(
-  state=>({
-    student: _find(state.studentList.list, {id: state.studentList.selectedId})
-  })
+  state=>{
+    let minCellWidth = 80, maxCellWidth = 100;
+    let minPaddingx2 = 2*2;
+    let totalWidth = state.env.width;
+    let fillWidth = totalWidth - minPaddingx2;
+
+    let count = Math.floor(fillWidth / (minCellWidth + minPaddingx2));
+
+    let cellWidth2 = Math.floor(fillWidth / count);
+    let cellWidth = cellWidth2 - minPaddingx2;
+    if(cellWidth > maxCellWidth) cellWidth = maxCellWidth;
+
+    let padding = Math.floor((totalWidth - cellWidth * count)/(count + 1)/2);
+    let leftPadding = (totalWidth - (cellWidth + padding) * count) / 2;
+    return {
+      totalWidth,padding,leftPadding,cellWidth,
+      width:state.env.width,
+      student: _find(state.studentList.list, {id: state.studentList.selectedId})
+    }
+  },dispatch=>({
+    action: bindActionCreators({
+      setAppWidth: action.setAppWidth
+    }, dispatch)})
 )(P);

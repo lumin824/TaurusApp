@@ -1,3 +1,4 @@
+import { Dimensions } from 'react-native';
 import { handleActions } from 'redux-actions';
 
 import _find from 'lodash/find';
@@ -99,4 +100,13 @@ export var contactList = handleActions({
   },{
     id:'4',name:'联通',phone:'10010'
   }]
+});
+
+const {height, width} = Dimensions.get('window');
+
+export var env = handleActions({
+  'setAppWidth': (state, action) => ({...state, width:action.payload})
+},{
+  maxWidth:width,
+  width:width
 });
