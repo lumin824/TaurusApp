@@ -20,11 +20,10 @@ import IconFont from './IconFont';
 class TabIcon extends Component {
     render(){
       let iconName = this.props.selected ? this.props.activeIconName || this.props.iconName : this.props.iconName;
-      let color = this.props.selected ? '#18B4ED' : '#B3B3B3';
+      let color = this.props.selected ? '#3d9679' : '#303131';
         return (
           <View style={{alignItems:'center'}}>
-            <IconFont name={iconName} style={{backgroundColor:'transparent'}} size={24} color={color} />
-            <Text style={{color, fontSize:11}}>{this.props.iconText || this.props.title}</Text>
+            <IconFont name={iconName} style={{backgroundColor:'transparent'}} size={30} color={color} />
           </View>
         );
     }
@@ -35,10 +34,22 @@ class BackButton extends Component {
     return (
       <TouchableOpacity style={[this.props.style,{flexDirection:'row'}]} onPress={Actions.pop}>
         <View style={{justifyContent:'center'}}>
-          <IconFont name='back' size={20} color='#fff' />
+          <IconFont name='back' size={20} color='#303131' />
         </View>
       </TouchableOpacity>
     );
+  }
+}
+
+class NavBar extends Component {
+  render(){
+    return (
+      <View style={{backgroundColor:'transparent', height:60,top:0, right:0,left:0,position:'absolute'}}>
+        <View style={{marginTop:36, marginHorizontal:10}}>
+          <Text style={{fontSize:20}}><Text style={{color:'#226f51'}}>SAFE/</Text><Text style={{color:'#303131'}}>校安通</Text></Text>
+        </View>
+      </View>
+    )
   }
 }
 
@@ -47,14 +58,14 @@ const ConnectedRouter = connect()(Router);
 const getSceneStyle = (props, computedProps) => {
   const style = {
     flex: 1,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#fdfbf8',
     shadowColor: null,
     shadowOffset: null,
     shadowOpacity: null,
     shadowRadius: null,
   };
   if (computedProps.isActive) {
-    style.marginTop = computedProps.hideNavBar ? 0 : Platform.select({ios: 64, android: 54});
+    style.marginTop = computedProps.hideNavBar ? 0 : Platform.select({ios:64,android:54});
     style.marginBottom = computedProps.hideTabBar ? 0 : 50;
   }
   return style;
@@ -80,15 +91,16 @@ class App extends Component {
     return (
       <ConnectedRouter
         getSceneStyle={getSceneStyle}
-        navigationBarStyle={{backgroundColor:'#18B4ED'}}
-        titleStyle={{color:'#fff'}}
+        navigationBarStyle={{backgroundColor:'#fdfbf8',borderBottomWidth:0}}
+        titleStyle={{color:'#303131'}}
         >
         <Scene key='login' component={page.LoginPage} hideNavBar={true} hideTabBar={true} title='登录' type='reset' />
-        <Scene key='main' tabs={true} type='replace' tabBarStyle={{backgroundColor:'#fff'}}>
-          <Scene key='home' component={page.HomePage} title='学校' getTitle={()=>this.props.student.schoolName} icon={TabIcon} iconName='home' activeIconName='homefill' />
-          <Scene key='messageTypeList' component={page.MessageTypeListPage} title='消息' icon={TabIcon} iconName='message' activeIconName='messagefill' />
-          <Scene key='contactList' component={page.ContactListPage} title='联系人' icon={TabIcon} iconName='friend' activeIconName='friendfill' />
-          <Scene key='profile' component={page.ProfilePage} title='我' icon={TabIcon} iconName='my' activeIconName='myfill' />
+        <Scene key='register' component={page.RegisterPage} hideNavBar={true} hideTabBar={true} title='注册' />
+        <Scene key='main' tabs={true} type='replace' tabBarStyle={{backgroundColor:'transparent', borderTopWidth:1, marginHorizontal:10, borderColor:'#d0d0d0'}} initial={true}>
+          <Scene key='home' component={page.HomePage} title='学校' navBar={NavBar} icon={TabIcon} iconName='rank' />
+          <Scene key='messageTypeList' component={page.MessageTypeListPage} title='消息' navBar={NavBar} icon={TabIcon} iconName='comment' />
+          <Scene key='contactList' component={page.ContactListPage} title='联系人' navBar={NavBar} icon={TabIcon} iconName='addressbook' />
+          <Scene key='profile' component={page.ProfilePage} title='我' navBar={NavBar} icon={TabIcon} iconName='my' />
         </Scene>
         <Scene key='selectStudent' component={page.SelectStudentPage} hideNavBar={false} hideTabBar={true} title='选择学生' backButton={BackButton} />
 

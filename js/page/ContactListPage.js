@@ -12,39 +12,60 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
+import _filter from 'lodash/filter';
+
 import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
   render(){
     return (
-      <ScrollView style={{paddingVertical:10}}>
-        {this.props.list.map(o=>(
-          <TouchableOpacity key={o.id} style={{
-              height:45, marginTop:1,
-              flexDirection:'row',
-              backgroundColor:'#fff'}} onPress={()=>{this.props.action.selectContact(o.id);Actions.contact()}}>
-              <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-                <Text style={{fontSize:15, color:'#000'}}>{o.name}</Text>
-              </View>
+      <View style={{flex:1}}>
+        <View
+          style={{height:50,flexDirection:'row', marginHorizontal:10, borderBottomWidth:1, borderColor:'#d0d0d0'}}>
+          {this.props.typeList.map((o,i)=>(
+            <TouchableOpacity key={i}
+              style={{
+                height:50, width:80, alignItems:'center', justifyContent:'center',
+                borderColor:'#3d9679',
+                borderBottomWidth: o.id == this.props.selectedTypeId ? 2 : 0}}
+              onPress={()=>this.props.action.selectContactType(o.id)}>
+              <Text style={{fontSize:16, color: o.id == this.props.selectedTypeId ? '#303131' : '#a7a7a7'}}>{o.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <ScrollView style={{flex:1,paddingVertical:10}}>
+          {this.props.list.map(o=>(
+            <TouchableOpacity key={o.id} style={{
+                height:100,
+                borderBottomWidth:1, marginHorizontal:10,borderColor:'#e6e6e6',
+                flexDirection:'row'}} onPress={()=>{this.props.action.selectContact(o.id);Actions.contact()}}>
+                <View style={{justifyContent:'center'}}>
+                  <View style={{width:60, height:60, borderRadius:30, backgroundColor:'#f00'}}></View>
+                </View>
+                <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
+                  <Text style={{fontSize:20, color:'#505050'}}>{o.name} <Text style={{fontSize:14, color:'#939393'}}>{o.title}</Text></Text>
+                  <Text style={{fontSize:14, color:'#939393'}}>{o.phone}</Text>
+                </View>
 
-              <View style={{justifyContent:'center', marginRight:15}}>
-                <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
-              </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
 
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }
 
 export default connect(
   state=>({
-    list: state.contactList.list
+    typeList: state.contactList.typeList,
+    selectedTypeId: state.contactList.typeId,
+    list: _filter(state.contactList.list,{typeId:state.contactList.typeId})
   }),
   dispatch=>({
     action: bindActionCreators({
+      selectContactType: action.selectContactType,
       selectContact: action.selectContact
     }, dispatch)})
 )(P);

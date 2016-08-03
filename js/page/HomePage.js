@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
+  ScrollView,
   Slider,
   Text,
   TextInput,
@@ -21,58 +22,71 @@ class P extends Component {
   render(){
     return (
       <View>
-        <View style={{height:180,alignItems:'center',justifyContent:'center'}}>
-          <Text>BANNER</Text>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
+          style={{flexDirection:'row', marginHorizontal:10, borderBottomWidth:1, borderColor:'#d0d0d0'}}>
+          {this.props.studentList.list.map((o,i)=>(
+            <TouchableOpacity key={i}
+              style={{
+                height:50, width:80, alignItems:'center', justifyContent:'center',
+                borderColor:'#3d9679',
+                borderBottomWidth: o.id == this.props.studentList.selectedId ? 2 : 0}}
+              onPress={()=>this.props.action.selectStudent(o.id)}>
+              <Text style={{fontSize:16, color: o.id == this.props.studentList.selectedId ? '#303131' : '#a7a7a7'}}>{o.name}</Text>
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity
+            style={{height:50, width:80, alignItems:'center', justifyContent:'center'}}
+            onPress={()=>this.props.action.selectStudent(o.id)}>
+            <Text style={{fontSize:16, color:'#a7a7a7'}}>添加</Text>
+          </TouchableOpacity>
+        </ScrollView>
+        <View style={{height:200,alignItems:'center',justifyContent:'center', marginTop:10}}>
+          <Image style={{height:200}} resizeMode='contain' source={require('../../res/school_logo.png')} />
         </View>
 
-        <TouchableOpacity style={{
-            height:45, marginTop:10,
-            flexDirection:'row',
-            backgroundColor:'#fff'}} onPress={Actions.selectStudent}>
-            <View style={{flex:1,justifyContent:'center', alignItems:'center', marginLeft:15}}>
-              <Text style={{fontSize:15,color:'#000'}}>{this.props.student.name}</Text>
-            </View>
-            <View style={{justifyContent:'center', marginRight:15}}>
-              <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
-            </View>
-        </TouchableOpacity>
+
 
         <View style={{marginTop:10}}>
-          <View style={{flexDirection:'row',flexWrap:'wrap', justifyContent:'flex-start', paddingHorizontal:this.props.padding}}>
-              <TouchableOpacity
-                 style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#1abc9c'}}
-                  onPress={()=>Actions.school()}>
-                <IconFont name='cascades' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
-                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>学校简介</Text>
-              </TouchableOpacity>
+          <View style={{marginHorizontal:10, borderTopWidth:1, borderColor:'#d0d0d0'}} />
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.school()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/school.png')} />
+              <Text style={{fontSize:18}}>学校简介</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.noticeList()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/notice.png')} />
+              <Text style={{fontSize:18}}>公告通知</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.homeworkList()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/homework.png')} />
+              <Text style={{fontSize:18}}>家庭作业</Text>
+            </TouchableOpacity>
+          </View>
 
-              <TouchableOpacity
-                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#f1c40f'}}
-                  onPress={()=>Actions.noticeList()}>
-                <IconFont name='notice' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
-                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>消息通知</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#e74c3c'}}
-                  onPress={()=>Actions.homeworkList()}>
-                <IconFont name='copy' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
-                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>家庭作业</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#3498db'}}
-                  onPress={()=>Actions.videoList()}>
-                <IconFont name='video' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
-                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>视频监控</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                  style={{borderRadius:5, height:this.props.cellWidth, width:this.props.cellWidth, margin:this.props.padding, alignItems:'center', backgroundColor:'#9b59b6'}}
-                  onPress={()=>Actions.attenceList()}>
-                <IconFont name='camera' style={{backgroundColor:'transparent', marginTop:15}} size={30} color='#fff' />
-                <Text style={{fontSize:16, marginTop:5, color:'#fff'}}>视频考勤</Text>
-              </TouchableOpacity>
+          <View style={{marginHorizontal:10, borderTopWidth:1, borderColor:'#d0d0d0'}} />
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.videoList()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/video.png')} />
+              <Text style={{fontSize:18}}>视频监控</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.videoList()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/video2.png')} />
+              <Text style={{fontSize:18}}>视频考勤</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/more.png')} />
+              <Text style={{fontSize:18}}>敬请期待</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -98,10 +112,11 @@ export default connect(
     return {
       totalWidth,padding,leftPadding,cellWidth,
       width:state.env.width,
-      student: _find(state.studentList.list, {id: state.studentList.selectedId})
+      student: _find(state.studentList.list, {id: state.studentList.selectedId}),
+      studentList: state.studentList
     }
   },dispatch=>({
     action: bindActionCreators({
-      setAppWidth: action.setAppWidth
+      selectStudent: action.selectStudent
     }, dispatch)})
 )(P);

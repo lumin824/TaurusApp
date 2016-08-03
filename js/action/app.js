@@ -12,6 +12,7 @@ export var selectAttence = createAction('selectAttence');
 
 export var selectMessageType = createAction('selectMessageType');
 
+export const selectContactType = createAction('selectContactType');
 export var selectContact = createAction('selectContact');
 
 export var setAppWidth = createAction('setAppWidth');

@@ -1,6 +1,7 @@
 
 import AboutPage from './AboutPage';
 import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
 
 
 import HomePage from './HomePage';
@@ -43,5 +44,6 @@ export {
 
   AboutPage,
   LoginPage,
+  RegisterPage,
 
 };

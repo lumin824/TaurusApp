@@ -21,6 +21,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		6D56BBA11D49207800B385E8 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D56BBA01D49207800B385E8 /* iconfont.ttf */; };
+		6D56BBFA1D4B2B3200B385E8 /* STZhongsong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D56BBF91D4B2B3200B385E8 /* STZhongsong.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		EF405BADBCCD47668C47405D /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 647634854AB0434C86A9CBF9 /* libRNVectorIcons.a */; };
 /* End PBXBuildFile section */
@@ -125,6 +126,7 @@
 		5F105CBC098B450A85825344 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		647634854AB0434C86A9CBF9 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		6D56BBA01D49207800B385E8 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = iconfont.ttf; path = ../icon/iconfont.ttf; sourceTree = "<group>"; };
+		6D56BBF91D4B2B3200B385E8 /* STZhongsong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = STZhongsong.ttf; path = ../res/STZhongsong.ttf; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -240,6 +242,7 @@
 		6D5A269C8B7147FFB791F4B2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6D56BBF91D4B2B3200B385E8 /* STZhongsong.ttf */,
 				6D56BBA01D49207800B385E8 /* iconfont.ttf */,
 			);
 			name = Resources;
@@ -486,6 +489,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				6D56BBA11D49207800B385E8 /* iconfont.ttf in Resources */,
+				6D56BBFA1D4B2B3200B385E8 /* STZhongsong.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
