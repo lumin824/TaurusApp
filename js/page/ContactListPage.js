@@ -18,6 +18,10 @@ import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
+
+  componentDidMount(){
+    this.props.action.contactList();
+  }
   render(){
     return (
       <View style={{flex:1}}>
@@ -35,8 +39,8 @@ class P extends Component {
           ))}
         </View>
         <ScrollView style={{flex:1,paddingVertical:10}}>
-          {this.props.list.map(o=>(
-            <TouchableOpacity key={o.id} style={{
+          {this.props.list.map((o,i)=>(
+            <TouchableOpacity key={o.id+i} style={{
                 height:100,
                 borderBottomWidth:1, marginHorizontal:10,borderColor:'#e6e6e6',
                 flexDirection:'row'}} onPress={()=>{this.props.action.selectContact(o.id);Actions.contact()}}>
@@ -44,7 +48,7 @@ class P extends Component {
                   <View style={{width:60, height:60, borderRadius:30, backgroundColor:'#f00'}}></View>
                 </View>
                 <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-                  <Text style={{fontSize:20, color:'#505050'}}>{o.name} <Text style={{fontSize:14, color:'#939393'}}>{o.title}</Text></Text>
+                  <Text style={{fontSize:20, color:'#505050'}}>{o.name} <Text style={{fontSize:14, color:'#939393'}}>{o.remark}</Text></Text>
                   <Text style={{fontSize:14, color:'#939393'}}>{o.phone}</Text>
                 </View>
 
@@ -61,10 +65,11 @@ export default connect(
   state=>({
     typeList: state.contactList.typeList,
     selectedTypeId: state.contactList.typeId,
-    list: _filter(state.contactList.list,{typeId:state.contactList.typeId})
+    list: _filter(state.contactList.list,{type:state.contactList.typeId})
   }),
   dispatch=>({
     action: bindActionCreators({
+      contactList: action.contactList,
       selectContactType: action.selectContactType,
       selectContact: action.selectContact
     }, dispatch)})

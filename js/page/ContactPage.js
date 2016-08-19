@@ -18,6 +18,8 @@ import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
+  componentDidMount(){
+  }
   render(){
     return (
       <View style={{paddingVertical:10}}>
@@ -40,6 +42,7 @@ class P extends Component {
 
 export default connect(
   state=>({
+    selectedId: state.contactList.selectedId,
     contact: _find(state.contactList.list, {id: state.contactList.selectedId})
   }),
   dispatch=>({

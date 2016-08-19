@@ -6,7 +6,9 @@ import RegisterPage from './RegisterPage';
 
 import HomePage from './HomePage';
 
-import SelectStudentPage from './SelectStudentPage';
+import SelectSchoolPage from './SelectSchoolPage';
+import SelectGradePage from './SelectGradePage';
+import SelectClassPage from './SelectClassPage';
 
 import SchoolPage from './SchoolPage';
 import NoticeListPage from './NoticeListPage';
@@ -23,9 +25,18 @@ import ContactListPage from './ContactListPage';
 import ContactPage from './ContactPage';
 import ProfilePage from './ProfilePage';
 
+
+import StudentAddPage from './StudentAddPage';
+import StudentBindPage from './StudentBindPage';
+
+import PasswordModifyPage from './PasswordModifyPage';
+import ProfileInfoPage from './ProfileInfoPage';
+
 export {
   HomePage,
-  SelectStudentPage,
+  SelectSchoolPage,
+  SelectGradePage,
+  SelectClassPage,
   SchoolPage,
   NoticeListPage,
   HomeworkListPage,
@@ -46,4 +57,8 @@ export {
   LoginPage,
   RegisterPage,
 
+  StudentAddPage,
+  StudentBindPage,
+  PasswordModifyPage,
+  ProfileInfoPage,
 };

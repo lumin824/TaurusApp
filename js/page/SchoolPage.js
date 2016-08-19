@@ -17,13 +17,27 @@ import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
+  constructor(props){
+    super(props);
+    this.updateProps(props);
+  }
+
+  componentWillReceiveProps(next){
+    this.updateProps(next);
+  }
+
+  updateProps(props){
+    this.props.action.schoolProfile({sid:props.sid});
+  }
   render(){
     return (
       <View>
-        <Text style={{fontSize:20, marginHorizontal:15, color:'#303131'}}>{this.props.school.name}</Text>
-        <Text style={{fontSize:12, marginHorizontal:15, color:'#727272', marginTop:10}}>{this.props.school.updateDate}</Text>
-        <Text style={{fontSize:16, marginHorizontal:15, color:'#727272', marginTop:10}}>{this.props.school.content}</Text>
-
+        {this.props.school ? (
+          <View>
+            <Text style={{fontSize:20, marginHorizontal:15, color:'#303131'}}>{this.props.school.name}</Text>
+            <Text style={{fontSize:12, marginHorizontal:15, color:'#727272', marginTop:10}}>{this.props.school.profile}</Text>
+          </View>
+        ):null}
       </View>
     )
   }
@@ -33,13 +47,13 @@ class P extends Component {
 export default connect(
   state=>{
     let student = _find(state.studentList.list, {id: state.studentList.selectedId});
-    let school = _find(state.schoolList.list, {id: student.schoolId});
     return {
-      school
+      sid: state.studentList.selectedId,
+      school: student.school
     }
   },
   dispatch=>({
     action: bindActionCreators({
-      login: action.login
+      schoolProfile: action.schoolProfile
     }, dispatch)})
 )(P);

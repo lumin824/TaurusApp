@@ -24,6 +24,7 @@ class TabIcon extends Component {
         return (
           <View style={{alignItems:'center'}}>
             <IconFont name={iconName} style={{backgroundColor:'transparent'}} size={30} color={color} />
+            <Text style={{color, fontSize:11}}>{this.props.iconText || this.props.title}</Text>
           </View>
         );
     }
@@ -94,15 +95,17 @@ class App extends Component {
         navigationBarStyle={{backgroundColor:'#fdfbf8',borderBottomWidth:0}}
         titleStyle={{color:'#303131'}}
         >
-        <Scene key='login' component={page.LoginPage} hideNavBar={true} hideTabBar={true} title='登录' type='reset' />
+        <Scene key='login' component={page.LoginPage} hideNavBar={true} hideTabBar={true} title='登录' type='reset' initial={true} />
         <Scene key='register' component={page.RegisterPage} hideNavBar={true} hideTabBar={true} title='注册' />
-        <Scene key='main' tabs={true} type='replace' tabBarStyle={{backgroundColor:'transparent', borderTopWidth:1, marginHorizontal:10, borderColor:'#d0d0d0'}} initial={true}>
+        <Scene key='main' tabs={true} type='replace' tabBarStyle={{backgroundColor:'transparent', borderTopWidth:1, marginHorizontal:10, borderColor:'#d0d0d0'}} >
           <Scene key='home' component={page.HomePage} title='学校' navBar={NavBar} icon={TabIcon} iconName='rank' />
           <Scene key='messageTypeList' component={page.MessageTypeListPage} title='消息' navBar={NavBar} icon={TabIcon} iconName='comment' />
           <Scene key='contactList' component={page.ContactListPage} title='联系人' navBar={NavBar} icon={TabIcon} iconName='addressbook' />
           <Scene key='profile' component={page.ProfilePage} title='我' navBar={NavBar} icon={TabIcon} iconName='my' />
         </Scene>
-        <Scene key='selectStudent' component={page.SelectStudentPage} hideNavBar={false} hideTabBar={true} title='选择学生' backButton={BackButton} />
+        <Scene key='selectSchool' component={page.SelectSchoolPage} hideNavBar={false} hideTabBar={true} title='选择学校' backButton={BackButton} />
+        <Scene key='selectGrade' component={page.SelectGradePage} hideNavBar={false} hideTabBar={true} title='选择年级' backButton={BackButton} />
+        <Scene key='selectClass' component={page.SelectClassPage} hideNavBar={false} hideTabBar={true} title='选择班级' backButton={BackButton} />
 
         <Scene key='school' component={page.SchoolPage} hideNavBar={false} hideTabBar={true} title='学校简介' backButton={BackButton} />
         <Scene key='noticeList' component={page.NoticeListPage} hideNavBar={false} hideTabBar={true} title='公告通知' backButton={BackButton} />
@@ -115,13 +118,19 @@ class App extends Component {
         <Scene key='messageList' component={page.MessageListPage} hideNavBar={false} hideTabBar={true} getTitle={()=>this.props.messageType.name} backButton={BackButton} />
         <Scene key='contact' component={page.ContactPage} hideNavBar={false} hideTabBar={true} getTitle={()=>this.props.contact.name} backButton={BackButton} />
         <Scene key='about' component={page.AboutPage} hideNavBar={false} hideTabBar={true} title='关于' backButton={BackButton}/>
-    </ConnectedRouter>
+        <Scene key='studentAdd' component={page.StudentAddPage} hideNavBar={true} hideTabBar={true} title='添加学生'/>
+        <Scene key='studentBind' component={page.StudentBindPage} hideNavBar={true} hideTabBar={true} title='申请绑定'/>
+
+        <Scene key='passwordModify' component={page.PasswordModifyPage} hideNavBar={true} hideTabBar={true} title='密码修改' />
+        <Scene key='profileInfo' component={page.ProfileInfoPage} hideNavBar={true} hideTabBar={true} title='个人信息' />
+
+
+      </ConnectedRouter>
     );
   }
 };
 
 const ConnectedApp = connect(state=>({
-  student: _find(state.studentList.list, {id: state.studentList.selectedId}),
   homework: _find(state.homeworkList.list, {id: state.homeworkList.selectedId}),
   video: _find(state.videoList.list, {id: state.videoList.selectedId}),
   attence: _find(state.attenceList.list, {id: state.attenceList.selectedId}),

@@ -1,6 +1,7 @@
 package com.taurusapp;
 
 import com.facebook.react.ReactActivity;
+import com.remobile.toast.RCTToastPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainActivity extends ReactActivity {

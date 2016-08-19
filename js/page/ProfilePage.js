@@ -18,68 +18,54 @@ class P extends Component {
     return (
       <View>
 
-        <TouchableOpacity style={{
-            height:45, marginTop:20,
-            flexDirection:'row',
-            backgroundColor:'#fff'}} onPress={Actions.about}>
-            <View style={{justifyContent:'center', marginLeft:10}}>
-              <IconFont name="home" style={{backgroundColor:'transparent'}} size={20} color="#BABABA" />
-            </View>
-            <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-              <Text style={{fontSize:15}}>李海荣</Text>
-            </View>
-	          <View style={{justifyContent:'center', marginRight:15}}>
-              <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
-            </View>
+        <TouchableOpacity style={{alignItems:'center'}} onPress={()=>Actions.profileInfo()}>
+          <View style={{width:100,height:100,borderRadius:50,backgroundColor:'#f00'}}>
+
+          </View>
+          <Text style={{marginTop:20}}>{this.props.user.username}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{
-            height:45, marginTop:20,
-            flexDirection:'row',
-            backgroundColor:'#fff'}} onPress={Actions.about}>
-            <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-              <Text style={{fontSize:15}}>帐号与安全</Text>
-            </View>
-	          <View style={{justifyContent:'center', marginRight:15}}>
-              <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
-            </View>
-        </TouchableOpacity>
+        <View style={{marginTop:10}}>
+          <View style={{marginHorizontal:10, borderTopWidth:1, borderColor:'#d0d0d0'}} />
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.school()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/account_security.png')} />
+              <Text style={{fontSize:18}}>账户安全</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.noticeList()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/about.png')} />
+              <Text style={{fontSize:18}}>关于校安通</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.homeworkList()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/system_notify.png')} />
+              <Text style={{fontSize:18}}>系统通知</Text>
+            </TouchableOpacity>
+          </View>
 
-        <TouchableOpacity style={{
-            height:45, marginTop:1,
-            flexDirection:'row',
-            backgroundColor:'#fff'}} onPress={Actions.about}>
-            <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-              <Text style={{fontSize:15}}>新消息通知</Text>
+          <View style={{marginHorizontal:10, borderTopWidth:1, borderColor:'#d0d0d0'}} />
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.videoList()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/feedback.png')} />
+              <Text style={{fontSize:18}}>意见反馈</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.passwordModify()}>
+              <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/feedback.png')} />
+              <Text style={{fontSize:18}}>修改密码</Text>
+            </TouchableOpacity>
+            <View style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}>
             </View>
-	          <View style={{justifyContent:'center', marginRight:15}}>
-              <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
-            </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{
-            height:45, marginTop:1,
-            flexDirection:'row',
-            backgroundColor:'#fff'}} onPress={Actions.about}>
-            <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-              <Text style={{fontSize:15}}>关于校安通</Text>
-            </View>
-	          <View style={{justifyContent:'center', marginRight:15}}>
-              <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
-            </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{
-            height:45, marginTop:1,
-            flexDirection:'row',
-            backgroundColor:'#fff'}} onPress={Actions.about}>
-            <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-              <Text style={{fontSize:15}}>意见与反馈</Text>
-            </View>
-	          <View style={{justifyContent:'center', marginRight:15}}>
-              <IconFont name='right' style={{backgroundColor:'transparent'}} size={20} color='#7F7F7F' />
-            </View>
-        </TouchableOpacity>
+          </View>
+        </View>
 
         <TouchableOpacity style={{
             height:45, marginTop:20,
@@ -96,5 +82,7 @@ class P extends Component {
 }
 
 export default connect(
-  state=>state.loginForm
+  state=>({
+    user: state.loginUser
+  })
 )(P);

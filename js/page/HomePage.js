@@ -19,6 +19,18 @@ import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
+
+  componentDidMount(){
+    this.props.action.studentList().then(action=>{
+
+    });
+  }
+
+  componentWillReceiveProps(next){
+    if(next.student && !next.student.school){
+      this.props.action.schoolSummary({sid:next.student.id});
+    }
+  }
   render(){
     return (
       <View>
@@ -36,12 +48,16 @@ class P extends Component {
           ))}
           <TouchableOpacity
             style={{height:50, width:80, alignItems:'center', justifyContent:'center'}}
-            onPress={()=>this.props.action.selectStudent(o.id)}>
+            onPress={()=>Actions.studentAdd()}>
             <Text style={{fontSize:16, color:'#a7a7a7'}}>添加</Text>
           </TouchableOpacity>
         </ScrollView>
-        <View style={{height:200,alignItems:'center',justifyContent:'center', marginTop:10}}>
-          <Image style={{height:200}} resizeMode='contain' source={require('../../res/school_logo.png')} />
+        <View style={{height:200, alignItems:'center',justifyContent:'center', marginTop:10}}>
+          {this.props.student && this.props.student.school && this.props.student.school.banners && this.props.student.school.banners.length ? (
+            <Image style={{width:this.props.width, flex:1}} resizeMode='cover' source={{uri:this.props.student.school.banners[0]}} />
+          ):(
+            <Text>无</Text>
+          )}
         </View>
 
 
@@ -79,7 +95,7 @@ class P extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
-              onPress={()=>Actions.videoList()}>
+              onPress={()=>Actions.attenceList()}>
               <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/video2.png')} />
               <Text style={{fontSize:18}}>视频考勤</Text>
             </TouchableOpacity>
@@ -117,6 +133,8 @@ export default connect(
     }
   },dispatch=>({
     action: bindActionCreators({
-      selectStudent: action.selectStudent
+      selectStudent: action.selectStudent,
+      studentList: action.studentList,
+      schoolSummary: action.schoolSummary,
     }, dispatch)})
 )(P);

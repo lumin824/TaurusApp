@@ -34,19 +34,19 @@ class P extends Component {
   }
 
   isDisabledSubmit(){
-    let { phone, password } = this.state;
-    return !phone || !password;
+    let { oldPassword, password } = this.state;
+    return !oldPassword || !password;
   }
 
   onPressSubmit(){
-    let { name, phone, password } = this.state;
-    this.props.action.register({
-      name, phone, password
+    let { oldPassword, password } = this.state;
+    this.props.action.passwordModify({
+      old_password:oldPassword, new_password:password
     }).then(action=>{
 
       let msg = action.error
-                ? action.payload.message || '注册失败'
-                : '注册成功';
+                ? action.payload.message || '密码修改失败'
+                : '密码修改成功';
       Toast.showShortBottom(msg);
 
       if(!action.error){ Actions.pop() }
@@ -61,23 +61,14 @@ class P extends Component {
             <IconFont name='close' size={28} color='#b2b2b2' />
           </TouchableOpacity>
           <View style={{flex:1, alignItems:'center'}}>
-            <Text style={{color:'#094c31',fontSize:20,fontFamily:this.props.fontFamily}}>注册</Text>
+            <Text style={{color:'#094c31',fontSize:20,fontFamily:this.props.fontFamily}}>{this.props.title}</Text>
           </View>
           <View style={{width:100}}>
           </View>
         </View>
 
-        <View style={{marginTop:40, alignItems:'center'}}>
-          <View style={{width:100,height:100,borderRadius:50,backgroundColor:'#d0e4db',alignItems:'center',justifyContent:'center'}}>
-            <IconFont name='camera' size={40} color='#fff' />
-            <View style={{position:'absolute', width:30,height:30,top:0,right:0,borderRadius:15,backgroundColor:'#00d9c4', alignItems:'center', justifyContent:'center'}}>
-              <IconFont name='add' size={20} color='#fff' style={{backgroundColor:'transparent'}} />
-            </View>
-          </View>
-        </View>
-
         <View style={{marginTop:35,marginHorizontal:30}}>
-          <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>昵称</Text>
+          <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>旧密码</Text>
         </View>
         <View style={{
             height:40,
@@ -89,11 +80,11 @@ class P extends Component {
               flex:1, color:'#505050',
               marginHorizontal:10,
               backgroundColor:'transparent'
-            }} onChangeText={name=>this.setState({name})} placeholder='请输入昵称' />
+            }} onChangeText={oldPassword=>this.setState({oldPassword})} placeholder='请输入旧密码' secureTextEntry={true} />
         </View>
 
         <View style={{marginTop:10,marginHorizontal:30}}>
-          <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>手机</Text>
+          <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>新密码</Text>
         </View>
         <View style={{
             height:40,
@@ -105,11 +96,11 @@ class P extends Component {
               flex:1, color:'#505050',
               marginHorizontal:10,
               backgroundColor:'transparent'
-            }} onChangeText={phone=>this.setState({phone})} placeholder='请输入手机号' />
+            }} onChangeText={password=>this.setState({password})} placeholder='请输入新密码' secureTextEntry={true} />
         </View>
 
         <View style={{marginTop:10,marginHorizontal:30}}>
-          <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>密码</Text>
+          <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>确认新密码</Text>
         </View>
         <View style={{
             height:40,
@@ -121,23 +112,7 @@ class P extends Component {
               flex:1, color:'#505050',
               marginHorizontal:10,
               backgroundColor:'transparent'
-            }} onChangeText={password=>this.setState({password})} placeholder='请输入密码' secureTextEntry={true} />
-        </View>
-
-        <View style={{marginTop:10,marginHorizontal:30}}>
-          <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>确认密码</Text>
-        </View>
-        <View style={{
-            height:40,
-            borderBottomWidth:1, borderColor:'#f0eeeb',
-            //borderTopLeftRadius:5, borderTopRightRadius:5,
-            marginHorizontal:30,
-          }}>
-          <TextInput style={{
-              flex:1, color:'#505050',
-              marginHorizontal:10,
-              backgroundColor:'transparent'
-            }} onChangeText={password2=>this.setState({password2})} placeholder='请确认密码' secureTextEntry={true} />
+            }} onChangeText={password2=>this.setState({password2})} placeholder='请确认新密码' secureTextEntry={true} />
         </View>
 
         <TouchableOpacity style={{
@@ -162,6 +137,6 @@ export default connect(
   }),
   dispatch=>({
     action: bindActionCreators({
-      register: action.register
+      passwordModify: action.passwordModify
     }, dispatch)})
 )(P);

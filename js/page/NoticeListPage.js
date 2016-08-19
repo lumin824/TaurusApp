@@ -13,11 +13,17 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import _find from 'lodash/find';
+import moment from 'moment';
 
 import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
+
+  componentDidMount(){
+    let { sid } = this.props;
+    this.props.action.noticesList({sid});
+  }
   render(){
     return (
       <ScrollView style={{flex:1,paddingVertical:10}}>
@@ -32,11 +38,8 @@ class P extends Component {
                 </View>
               </View>
               <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-                <Text style={{fontSize:20, color:'#505050'}}>{o.content}</Text>
-                <Text style={{fontSize:14, color:'#939393'}}>{o.date}</Text>
-              </View>
-              <View style={{justifyContent:'center', marginRight:15}}>
-                <Text style={{fontSize:16, color:o.stateColor}}>{o.stateName}</Text>
+                <Text style={{fontSize:20, color:'#505050'}}>{o.title}</Text>
+                <Text style={{fontSize:14, color:'#939393'}}>{moment(o.timestamp).format("YY年MM月DD日 hh:mm")}</Text>
               </View>
 
           </TouchableOpacity>
@@ -51,22 +54,21 @@ export default connect(
   state=>{
 
     let list = state.noticeList.list.map(o=>{
-      let s = _find(state.noticeList.stateList, {id:o.stateId});
-      let type = _find(state.noticeList.typeList, {id:o.typeId});
+      //let s = _find(state.noticeList.stateList, {id:o.stateId});
+      let type = _find(state.noticeList.typeList, {id:o.type});
       return {
         ...o,
-        stateName: s.name,
-        stateColor: s.color,
         typeBackgroundColor: type.backgroundColor,
         typeShortName: type.shortName
       }
     });
     return {
+      sid: state.studentList.selectedId,
       list
     }
   },
   dispatch=>({
     action: bindActionCreators({
-      login: action.login
+      noticesList: action.noticesList
     }, dispatch)})
 )(P);

@@ -2,40 +2,72 @@ import { Dimensions } from 'react-native';
 import { handleActions } from 'redux-actions';
 
 import _find from 'lodash/find';
+import _reject from 'lodash/reject';
+import _unionWith from 'lodash/unionWith';
 
 export var loginForm = handleActions({
-  'memberLoginResult': (state, action) => (action.error ? state : action.meta)
+  'loginResult': (state, action) => (action.error ? state : action.meta)
+},{});
+
+export var loginUser = handleActions({
+  'loginResult': (state, action) => (action.error ? state : {...state, ...action.meta, ...action.payload}),
+  'profileResult': (state, action) => (action.error ? state : {...state, ...action.payload}),
+  'profilePostRequest': (state, action) => (action.error ? state : {...state, ...action.payload})
 },{});
 
 export var studentList = handleActions({
-  'selectStudent': (state, action) => ({...state, selectedId:action.payload})
+  'selectStudent': (state, action) => ({...state, selectedId:action.payload}),
+  'studentListResult': (state, action) => {
+    if(action.error) return state;
+    let list = action.payload.students;
+    let selectedId = list.length && list[0].id;
+    return {...state, list, selectedId};
+  },
+  'studentRelatedListResult': (state, action) => ({...state, relatedList:action.payload.students}),
+  'studentAppliedListResult': (state, action) => ({...state, appliedList:action.payload.requests}),
+  'schoolSummaryResult': (state, action) => {
+    let newList = [...state.list];
+    let student = _find(newList, {id:action.meta.sid});
+    if(student){
+      student.school = {
+        ...student.school,
+        ...action.payload
+      }
+    }
+    return {...state, list:newList};
+  },
+  'schoolProfileResult': (state, action) => {
+    let newList = [...state.list];
+    let student = _find(newList, {id:action.meta.sid});
+    if(student){
+      student.school = {
+        ...student.school,
+        ...action.payload
+      }
+    }
+    return {...state, list:newList};
+  },
+  'studentAssociateResult': (state, action) => {
+    if(action.error) return state;
+
+    let id = action.meta.student_id;
+    let student = _find(state.relatedList, {id})
+    let relatedList = _reject(state.relatedList, {id});
+
+    return {...state, relatedList, list:[...state.list, student]};
+  }
+
 },{
-  list:[{
-    id:'1', name:'张三1', schoolId:'1'
-  },{
-    id:'2', name:'李四2', schoolId:'1'
-  },{
-    id:'3', name:'王五3', schoolId:'1'
-  },{
-    id:'4', name:'张三4', schoolId:'1'
-  },{
-    id:'5', name:'李四5', schoolId:'1'
-  },{
-    id:'6', name:'王五6', schoolId:'1'
-  }],
-  selectedId:'1'
+  list:[],
+  selectedId:'1',
+  relatedList:[],appliedList:[]
 })
 
 export var homeworkList = handleActions({
-  'selectHomework': (state, action) => ({...state, selectedId:action.payload})
+  'selectHomework': (state, action) => ({...state, selectedId:action.payload}),
+  'homeworkListResult': (state, action) => ({...state, list:action.payload.records})
 },{
-  list:[{
-    id:'1', name:'07-07家庭作业', content:'背影抄10便'
-  },{
-    id:'2', name:'07-06家庭作业', content:'背诵全文'
-  },{
-    id:'3', name:'07-05家庭作业', content:'写篇游记'
-  }],
+  list:[],
   selectedId:'1'
 });
 
@@ -54,13 +86,16 @@ export var videoList = handleActions({
 });
 
 export var attenceList = handleActions({
-  'selectAttence': (state, action) => ({...state, selectedId:action.payload})
+  'selectAttence': (state, action) => ({...state, selectedId:action.payload}),
+  'attenceListResult': (state, action) => ({...state, list:action.payload.records}),
 },{
-  list:[{
-    id:'1', type:'进校', place:'西门', date:'2015-07-10 08:20:26'
-  },{
-    id:'2', type:'出校', place:'西门', date:'2015-07-10 08:20:26'
-  }]
+  directionList:[
+    { id: '-1', name: '' },
+    { id: '0', name: '未知' },
+    { id: '1', name: '进' },
+    { id: '2', name: '出' },
+  ],
+  list:[]
 });
 
 export const messageList = handleActions({
@@ -103,28 +138,24 @@ export const messageList = handleActions({
 
 export var contactList = handleActions({
   'selectContactType': (state, action) => ({...state, typeId:action.payload}),
-  'selectContact': (state, action) => ({...state, selectedId:action.payload})
+  'selectContact': (state, action) => ({...state, selectedId:action.payload}),
+  'contactListResult': (state, action) => (action.error ? state : {...state, list:action.payload.contacts}),
 },{
-  list:[{
-    id:'1',name:'张晓霞',phone:'18862068855', title:'(三年级二班语文老师)', typeId:'1'
-  },{
-    id:'2',name:'叶子文',phone:'18862068855', title:'(三年级二班数学老师)', typeId:'1'
-  },{
-    id:'5',name:'陆民',phone:'18662019771', typeId:'2'
-  },{
-    id:'3',name:'匪警',phone:'110', typeId:'2'
-  },{
-    id:'4',name:'联通',phone:'10010', typeId:'2'
-  }],
+  list:[],
   typeList:[{
-    id:'1', name:'教师',
+    id:'T', name:'教师',
   },{
-    id:'2', name:'家长'
+    id:'G', name:'家长'
   }],
-  typeId:'1'
+  typeId:'T'
 });
 
-export const noticeList = handleActions({},{
+export const noticeList = handleActions({
+  'noticesListResult': (state, action) => (action.error ? state : {
+    ...state,
+    list: action.payload.records
+  })
+},{
   typeList:[{
     id:'1', shortName:'校', backgroundColor:'#f1dfad'
   },{
@@ -135,23 +166,31 @@ export const noticeList = handleActions({},{
   },{
     id:'2', name:'最新', color:'#3d9679'
   }],
-  list:[{
-    id:'1', content:'关于学校家长会通知...', date:'2016.6.12 12:10', stateId:'1', typeId:'1'
-  },{
-    id:'2', content:'全班开会通知...', date:'2016.6.12 11:10', stateId:'2', typeId:'2'
-  },{
-    id:'3', content:'关于学校考核通知...', date:'2016.6.12 12:10', stateId:'1', typeId:'1'
-  },{
-    id:'4', content:'班干部会议通知...', date:'2016.6.12 11:10', stateId:'2', typeId:'2'
-  }]
+  list:[]
 });
 
-export const schoolList = handleActions({},{
-  list: [{
-    id: '1', name:'盐城⋅第一中学', updateDate:'2016.6.12 12.10',
-    content: '学校在办学早期就恪守学必成功\n并积极倡导四个盐中精神'
-  }]
+export const schoolList = handleActions({
+  'schoolListResult': (state, action) => (action.error ? state : {...state, list:action.payload.schools})
+},{
+  list: []
 });
+export const gradeList = handleActions({
+  'gradeListResult': (state, action) => (action.error ? state : {...state, list:action.payload.grades})
+},{
+  list: []
+});
+
+export const classList = handleActions({
+  'classListResult': (state, action) => (action.error ? state : {...state, list:action.payload.classes})
+},{
+  list: []
+});
+
+export const bindStudentForm = handleActions({
+  'selectSchool': (state, action) => ({...state, schoolId:action.payload}),
+  'selectGrade': (state, action) => ({...state, gradeId:action.payload}),
+  'selectClass': (state, action) => ({...state, classId:action.payload}),
+},{})
 
 const {height, width} = Dimensions.get('window');
 

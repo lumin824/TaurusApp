@@ -10,6 +10,7 @@ import {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import Toast from 'react-native-toast';
 
 import _find from 'lodash/find';
 
@@ -21,7 +22,7 @@ class P extends Component {
   constructor(props){
     super(props);
     this.state = {
-      phone: props.phone,
+      username: props.username,
       password: props.password
     };
   }
@@ -35,18 +36,24 @@ class P extends Component {
   }
 
   isDisabledSubmit(){
-    let { phone, password } = this.state;
-    return !phone || !password;
+    let { username, password } = this.state;
+    return !username || !password;
   }
 
   onPressSubmit(){
-    let { phone, password } = this.state;
+    let { username, password } = this.state;
     this.props.action.login({
-      phone, password
+      username, password
     }).then(action=>{
-      if(!action.error){ Actions.main() }
-      else{
-        this.setState({tip:action.payload.message});
+
+      let msg = action.error
+                ? action.payload.message || '登录失败'
+                : '登录成功';
+      Toast.showShortBottom(msg);
+
+      if(!action.error){
+        this.props.action.profile();
+        Actions.main()
       }
     });
   }
@@ -74,7 +81,7 @@ class P extends Component {
               flex:1, color:'#505050',
               marginHorizontal:10,textAlign:'center',
               backgroundColor:'transparent'
-            }} onChangeText={phone=>this.setState({phone})} value={this.state.phone} placeholder='请输入手机号' />
+            }} onChangeText={username=>this.setState({username})} value={this.state.username} placeholder='请输入手机号' />
         </View>
 
         <View style={{marginTop:40,alignItems:'center'}}>
@@ -130,6 +137,7 @@ export default connect(
   }),
   dispatch=>({
     action: bindActionCreators({
-      login: action.login
+      login: action.login,
+      profile: action.profile
     }, dispatch)})
 )(P);

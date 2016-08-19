@@ -12,10 +12,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
+import moment from 'moment';
+
 import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
+  componentDidMount(){
+    let sid = this.props.sid;
+    this.props.action.homeworkList({sid});
+  }
   render(){
     return (
       <ScrollView style={{paddingVertical:10}}>
@@ -25,7 +31,11 @@ class P extends Component {
               flexDirection:'row',
               backgroundColor:'#fff'}} onPress={()=>{this.props.action.selectHomework(o.id);Actions.homework()}}>
               <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-                <Text style={{fontSize:15, color:'#000'}}>{o.name}</Text>
+                <Text style={{fontSize:15, color:'#000'}}>{o.course}</Text>
+              </View>
+
+              <View>
+                <Text>{moment(o.start_date).format("YY年MM月DD日 hh:mm")}~{moment(o.end_date).format("YY年MM月DD日 hh:mm")}</Text>
               </View>
 
               <View style={{justifyContent:'center', marginRight:15}}>
@@ -41,10 +51,12 @@ class P extends Component {
 
 export default connect(
   state=>({
+    sid: state.studentList.selectedId,
     list: state.homeworkList.list
   }),
   dispatch=>({
     action: bindActionCreators({
-      selectHomework: action.selectHomework
+      selectHomework: action.selectHomework,
+      homeworkList: action.homeworkList
     }, dispatch)})
 )(P);
