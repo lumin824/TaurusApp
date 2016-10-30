@@ -30,7 +30,7 @@ class P extends Component {
 
   componentDidMount(){
     this.props.action.studentRelatedList();
-    this.props.action.studentAppliedList();
+    //this.props.action.studentAppliedList();
   }
 
   componentWillReceiveProps(nextProps){
@@ -75,12 +75,6 @@ class P extends Component {
           </View>
         </View>
 
-        <View style={{flexDirection:'row'}}>
-          <Text>未找到匹配学生?</Text>
-          <TouchableOpacity style={{borderWidth:1}} onPress={()=>Actions.studentBind()}>
-            <Text style={{margin:10}}>点击这里</Text>
-          </TouchableOpacity>
-        </View>
 
         <View>
           <Text>系统根据您的注册手机号自动帮你匹配如下学生，请点击确认绑定，实现绑定管理</Text>
@@ -99,25 +93,6 @@ class P extends Component {
                 <Text style={{fontSize:16, color:o.stateColor}}>点击绑定</Text>
               </View>
           </TouchableOpacity>
-        ))}
-
-        <View>
-          <Text>待审核的申请</Text>
-        </View>
-
-        {this.props.appliedList.map((o,i)=>(
-          <View key={i} style={{
-              height:100,
-              borderBottomWidth:1, marginHorizontal:10,borderColor:'#e6e6e6',
-              flexDirection:'row'}} onPress={()=>this.onPressAssociate(o.id)}>
-              <View style={{flex:1,justifyContent:'center', marginLeft:15}}>
-                <Text style={{fontSize:20, color:'#505050'}}>{o.name}</Text>
-                <Text style={{fontSize:14, color:'#939393'}}>{o.class_name}</Text>
-              </View>
-              <View style={{justifyContent:'center', marginRight:15}}>
-                <Text style={{fontSize:16, color:o.stateColor}}>{moment(o.request_time).format("YY年MM月DD日 hh:mm")}</Text>
-              </View>
-          </View>
         ))}
 
 

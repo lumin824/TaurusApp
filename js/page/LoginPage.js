@@ -61,14 +61,11 @@ class P extends Component {
   render(){
     return (
       <View style={{flex:1, backgroundColor:'#fdfbf8'}}>
-        <View style={{marginTop:95,height:60, alignItems:'center'}}>
-          <Image source={require('../../res/logo.png')} style={{height:60}} resizeMode='contain' />
+        <View style={{marginTop:95,height:150, alignItems:'center'}}>
+          <Image source={require('../../res/logo.png')} style={{height:180}} resizeMode='contain' />
         </View>
 
-        <View style={{marginTop:10,alignItems:'center'}}>
-          <Text style={{color:'#094c31',fontSize:40,fontFamily:this.props.fontFamily}}>校安通</Text>
-        </View>
-        <View style={{marginTop:95,alignItems:'center'}}>
+        <View style={{marginTop:45,alignItems:'center'}}>
           <Text style={{color:'#3d9679',fontSize:16,fontFamily:this.props.fontFamily}}>手机号/Mobile</Text>
         </View>
         <View style={{
@@ -84,7 +81,7 @@ class P extends Component {
             }} onChangeText={username=>this.setState({username})} value={this.state.username} placeholder='请输入手机号' />
         </View>
 
-        <View style={{marginTop:40,alignItems:'center'}}>
+        <View style={{marginTop:20,alignItems:'center'}}>
           <Text style={{color:'#3d9679',fontSize:16,fontFamily:this.props.fontFamily}}>密码/Password</Text>
         </View>
 
@@ -107,17 +104,19 @@ class P extends Component {
             backgroundColor: this.isDisabledSubmit() ? '#d0e4db':'#d0e4db',
             borderWidth:1, borderColor:'#3d9679',
             borderRadius:5,
-            marginHorizontal:15, marginTop:65,
+            marginHorizontal:15,
           }} onPress={this.onPressSubmit.bind(this)} disabled={this.isDisabledSubmit()}>
           <Text style={{color:'#0b5c3b',fontSize:20,fontFamily:this.props.fontFamily}}>登  录</Text>
         </TouchableOpacity>
         <View style={{flex:1}} />
         <View style={{flexDirection:'row', height:60}}>
-          <TouchableOpacity
-            style={{width:100, alignItems:'center', justifyContent:'center'}}
-            onPress={()=>Actions.register()}>
-            <Text style={{color:'#a6a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>忘记密码</Text>
-          </TouchableOpacity>
+          {false?(
+            <TouchableOpacity
+              style={{width:100, alignItems:'center', justifyContent:'center'}}
+              onPress={()=>Actions.register()}>
+              <Text style={{color:'#a6a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>忘记密码</Text>
+            </TouchableOpacity>
+          ):null}
           <View style={{flex:1}} />
           <TouchableOpacity
             style={{width:100, alignItems:'center', justifyContent:'center'}}

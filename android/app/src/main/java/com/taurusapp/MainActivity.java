@@ -1,6 +1,8 @@
 package com.taurusapp;
 
 import com.facebook.react.ReactActivity;
+import com.lumin824.hik.HikPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.remobile.toast.RCTToastPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 

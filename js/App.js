@@ -56,7 +56,7 @@ class NavBar extends Component {
 
 const ConnectedRouter = connect()(Router);
 
-const getSceneStyle = (props, computedProps) => {
+const extendStyle = (es) => (props, computedProps) => {
   const style = {
     flex: 1,
     backgroundColor: '#fdfbf8',
@@ -69,8 +69,10 @@ const getSceneStyle = (props, computedProps) => {
     style.marginTop = computedProps.hideNavBar ? 0 : Platform.select({ios:64,android:54});
     style.marginBottom = computedProps.hideTabBar ? 0 : 50;
   }
-  return style;
-};
+  return {...style, ...es};
+}
+
+const getSceneStyle = extendStyle();
 
 class App extends Component {
   constructor(props){
@@ -109,14 +111,22 @@ class App extends Component {
 
         <Scene key='school' component={page.SchoolPage} hideNavBar={false} hideTabBar={true} title='学校简介' backButton={BackButton} />
         <Scene key='noticeList' component={page.NoticeListPage} hideNavBar={false} hideTabBar={true} title='公告通知' backButton={BackButton} />
+
         <Scene key='homeworkList' component={page.HomeworkListPage} hideNavBar={false} hideTabBar={true} title='家庭作业' backButton={BackButton} />
-        <Scene key='homework' component={page.HomeworkPage} hideNavBar={false} hideTabBar={true} getTitle={()=>this.props.homework.name} backButton={BackButton} />
         <Scene key='videoList' component={page.VideoListPage} hideNavBar={false} hideTabBar={true} title='视频监控' backButton={BackButton} />
-        <Scene key='video' component={page.VideoPage} hideNavBar={false} hideTabBar={true} getTitle={()=>this.props.video.name} backButton={BackButton} />
+        <Scene key='video' component={page.VideoPage} hideNavBar={false} hideTabBar={true} title='视频' backButton={BackButton} />
         <Scene key='attenceList' component={page.AttenceListPage} hideNavBar={false} hideTabBar={true} title='视频考勤' backButton={BackButton} />
-        <Scene key='attence' component={page.AttencePage} hideNavBar={false} hideTabBar={true} getTitle={()=>this.props.attence.type} backButton={BackButton} />
-        <Scene key='messageList' component={page.MessageListPage} hideNavBar={false} hideTabBar={true} getTitle={()=>this.props.messageType.name} backButton={BackButton} />
-        <Scene key='contact' component={page.ContactPage} hideNavBar={false} hideTabBar={true} getTitle={()=>this.props.contact.name} backButton={BackButton} />
+        <Scene key='messageListSchool' component={page.MessageListSchoolPage} hideNavBar={false} hideTabBar={true} title='学校通知' backButton={BackButton} />
+        <Scene key='messageListClass' component={page.MessageListClassPage} hideNavBar={false} hideTabBar={true} title='班级通知' backButton={BackButton} />
+        <Scene key='messageListHomework' component={page.MessageListHomeworkPage} hideNavBar={false} hideTabBar={true} title='家庭作业' backButton={BackButton} />
+        <Scene key='messageListMonitor' component={page.MessageListMonitorPage} hideNavBar={false} hideTabBar={true} title='考勤通知' backButton={BackButton} />
+
+        <Scene key='messageSchool' component={page.MessageSchoolPage} hideNavBar={false} hideTabBar={true} title='学校通知' backButton={BackButton} />
+        <Scene key='messageClass' component={page.MessageClassPage} hideNavBar={false} hideTabBar={true} title='学校' backButton={BackButton} />
+        <Scene key='messageHomework' component={page.MessageHomeworkPage} hideNavBar={false} hideTabBar={true} title='家庭作业' backButton={BackButton} />
+        <Scene key='messageMonitor' component={page.MessageMonitorPage} hideNavBar={false} hideTabBar={true} title='考勤' backButton={BackButton} />
+
+        <Scene key='contact' component={page.ContactPage} hideNavBar={true} hideTabBar={true} backButton={BackButton} getSceneStyle={extendStyle({backgroundColor:'transparent'})} />
         <Scene key='about' component={page.AboutPage} hideNavBar={false} hideTabBar={true} title='关于' backButton={BackButton}/>
         <Scene key='studentAdd' component={page.StudentAddPage} hideNavBar={true} hideTabBar={true} title='添加学生'/>
         <Scene key='studentBind' component={page.StudentBindPage} hideNavBar={true} hideTabBar={true} title='申请绑定'/>
@@ -124,7 +134,10 @@ class App extends Component {
         <Scene key='passwordModify' component={page.PasswordModifyPage} hideNavBar={true} hideTabBar={true} title='密码修改' />
         <Scene key='profileInfo' component={page.ProfileInfoPage} hideNavBar={true} hideTabBar={true} title='个人信息' />
 
+        <Scene key='imageView' component={page.ImageViewPage} hideNavBar={true} hideTabBar={true} title='注册' />
 
+        <Scene key='terms' component={page.TermsPage} hideNavBar={false} hideTabBar={true} title='条款' backButton={BackButton}/>
+        <Scene key='secret' component={page.SecretPage} hideNavBar={false} hideTabBar={true} title='隐私' backButton={BackButton}/>
       </ConnectedRouter>
     );
   }
@@ -132,7 +145,6 @@ class App extends Component {
 
 const ConnectedApp = connect(state=>({
   homework: _find(state.homeworkList.list, {id: state.homeworkList.selectedId}),
-  video: _find(state.videoList.list, {id: state.videoList.selectedId}),
   attence: _find(state.attenceList.list, {id: state.attenceList.selectedId}),
   messageType: _find(state.messageList.typeList, {id: state.messageList.selectedTypeId}),
   contact: _find(state.contactList.list, {id: state.contactList.selectedId})

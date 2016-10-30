@@ -140,6 +140,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-hik')
+    compile project(':react-native-image-picker')
     compile project(':react-native-toast')
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])

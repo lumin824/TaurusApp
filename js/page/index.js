@@ -13,14 +13,21 @@ import SelectClassPage from './SelectClassPage';
 import SchoolPage from './SchoolPage';
 import NoticeListPage from './NoticeListPage';
 import HomeworkListPage from './HomeworkListPage';
-import HomeworkPage from './HomeworkPage';
 import VideoListPage from './VideoListPage';
 import VideoPage from './VideoPage';
 import AttenceListPage from './AttenceListPage';
-import AttencePage from './AttencePage';
 
 import MessageTypeListPage from './MessageTypeListPage';
-import MessageListPage from './MessageListPage';
+import MessageListSchoolPage from './MessageListSchoolPage';
+import MessageListClassPage from './MessageListClassPage';
+import MessageListHomeworkPage from './MessageListHomeworkPage';
+import MessageListMonitorPage from './MessageListMonitorPage';
+
+import MessageSchoolPage from './MessageSchoolPage';
+import MessageClassPage from './MessageClassPage';
+import MessageHomeworkPage from './MessageHomeworkPage';
+import MessageMonitorPage from './MessageMonitorPage';
+
 import ContactListPage from './ContactListPage';
 import ContactPage from './ContactPage';
 import ProfilePage from './ProfilePage';
@@ -32,6 +39,11 @@ import StudentBindPage from './StudentBindPage';
 import PasswordModifyPage from './PasswordModifyPage';
 import ProfileInfoPage from './ProfileInfoPage';
 
+import ImageViewPage from './ImageViewPage';
+
+import TermsPage from './TermsPage';
+import SecretPage from './SecretPage';
+
 export {
   HomePage,
   SelectSchoolPage,
@@ -40,14 +52,11 @@ export {
   SchoolPage,
   NoticeListPage,
   HomeworkListPage,
-  HomeworkPage,
   VideoListPage,
   VideoPage,
   AttenceListPage,
-  AttencePage,
 
   MessageTypeListPage,
-  MessageListPage,
 
   ContactListPage,
   ContactPage,
@@ -61,4 +70,21 @@ export {
   StudentBindPage,
   PasswordModifyPage,
   ProfileInfoPage,
+
+  MessageListSchoolPage,
+  MessageListClassPage,
+  MessageListHomeworkPage,
+  MessageListMonitorPage,
+
+  //MessageListSchoolPage,
+  //MessageListClassPage,
+  MessageSchoolPage,
+  MessageClassPage,
+  MessageHomeworkPage,
+  MessageMonitorPage,
+  //MessageListMonitorPage,
+  ImageViewPage,
+
+  TermsPage,
+  SecretPage,
 };

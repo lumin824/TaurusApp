@@ -54,6 +54,18 @@ class P extends Component {
     });
   }
 
+  onPressPhoto(){
+    this.props.action.imagePicker().then(action=>{
+      let { uri, fileSize } = action.payload;
+      this.props.action.uploadImage({
+        portrait:{uri,type:'image/jpg',name:uri},
+        size: fileSize
+      }).then(action=>{
+
+      });
+    });
+  }
+
   render(){
     return (
       <View style={{flex:1, backgroundColor:'#fdfbf8'}}>
@@ -67,6 +79,15 @@ class P extends Component {
           <View style={{width:100}}>
           </View>
         </View>
+
+        <TouchableOpacity style={{marginTop:40, alignItems:'center'}} onPress={this.onPressPhoto.bind(this)}>
+          <View style={{width:100,height:100,borderRadius:50,backgroundColor:'#d0e4db',alignItems:'center',justifyContent:'center'}}>
+            <IconFont name='camera' size={40} color='#fff' />
+            <View style={{position:'absolute', width:30,height:30,top:0,right:0,borderRadius:15,backgroundColor:'#00d9c4', alignItems:'center', justifyContent:'center'}}>
+              <IconFont name='add' size={20} color='#fff' style={{backgroundColor:'transparent'}} />
+            </View>
+          </View>
+        </TouchableOpacity>
 
         <View style={{marginTop:35,marginHorizontal:30}}>
           <Text style={{color:'#a5a5a5',fontSize:16,fontFamily:this.props.fontFamily}}>昵称</Text>
@@ -122,6 +143,8 @@ export default connect(
   }),
   dispatch=>({
     action: bindActionCreators({
-      profilePost: action.profilePost
+      profilePost: action.profilePost,
+      imagePicker: action.imagePicker,
+      uploadImage: action.uploadImage
     }, dispatch)})
 )(P);

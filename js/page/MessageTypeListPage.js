@@ -16,11 +16,12 @@ import IconFont from '../IconFont';
 import action from '../action';
 
 class P extends Component {
+
   render(){
     return (
       <View style={{marginTop:10, marginHorizontal:10}}>
         <View style={{flexDirection:'row'}}>
-          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>{this.props.action.selectMessageType('1');Actions.messageList()}}>
+          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>Actions.messageListSchool()}>
             <View
               style={{
                 alignItems:'center', justifyContent:'center',
@@ -30,7 +31,7 @@ class P extends Component {
             </View>
             <Text style={{fontSize:18, marginTop:10}}>学校通知</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>{this.props.action.selectMessageType('2');Actions.messageList()}}>
+          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>Actions.messageListClass()}>
             <View
               style={{
                 alignItems:'center', justifyContent:'center',
@@ -40,7 +41,7 @@ class P extends Component {
             </View>
             <Text style={{fontSize:18, marginTop:10}}>班级通知</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>{this.props.action.selectMessageType('3');Actions.messageList()}}>
+          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>Actions.messageListHomework()}>
             <View
               style={{
                 alignItems:'center', justifyContent:'center',
@@ -52,7 +53,7 @@ class P extends Component {
           </TouchableOpacity>
         </View>
         <View style={{flexDirection:'row', marginTop:20}}>
-          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>{this.props.action.selectMessageType('4');Actions.messageList()}}>
+          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={()=>Actions.messageListMonitor()}>
             <View
               style={{
                 alignItems:'center', justifyContent:'center',
@@ -78,6 +79,6 @@ export default connect(
   }),
   dispatch=>({
     action: bindActionCreators({
-      selectMessageType: action.selectMessageType
+      selectMessageType: action.selectMessageType,
     }, dispatch)})
 )(P);

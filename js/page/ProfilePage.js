@@ -30,19 +30,19 @@ class P extends Component {
           <View style={{flexDirection:'row'}}>
             <TouchableOpacity
               style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
-              onPress={()=>Actions.school()}>
+              >
               <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/account_security.png')} />
               <Text style={{fontSize:18}}>账户安全</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
-              onPress={()=>Actions.noticeList()}>
+              onPress={()=>Actions.about()}>
               <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/about.png')} />
               <Text style={{fontSize:18}}>关于校安通</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
-              onPress={()=>Actions.homeworkList()}>
+              >
               <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/system_notify.png')} />
               <Text style={{fontSize:18}}>系统通知</Text>
             </TouchableOpacity>
@@ -52,7 +52,7 @@ class P extends Component {
           <View style={{flexDirection:'row'}}>
             <TouchableOpacity
               style={{flex:1, height:100, alignItems:'center', justifyContent:'center'}}
-              onPress={()=>Actions.videoList()}>
+              >
               <Image style={{width:60,height:60}} resizeMode='contain' source={require('../../res/feedback.png')} />
               <Text style={{fontSize:18}}>意见反馈</Text>
             </TouchableOpacity>
